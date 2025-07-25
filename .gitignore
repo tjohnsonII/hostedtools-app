@@ -17,8 +17,9 @@
 .env.development.local
 .env.test.local
 .env.production.local
-123hostedtools_com/123hostedtools.com.key
-123hostedtools_com/123hostedtools.com.pem
+certs/123hostedtools.com.key
+certs/123hostedtools.com.pem
+certs/123hostedtools_com.ca-bundle
 
 #logs
 npm-debug.log*
