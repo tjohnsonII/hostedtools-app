@@ -1,0 +1,10 @@
+import React from 'react';
+import '../css/Reference.css';
+
+const Reference: React.FC = () => (
+  <div className="reference">
+    <h2>Reference</h2>
+  </div>
+);
+
+export default Reference;

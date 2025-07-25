@@ -17,7 +17,10 @@
 .env.development.local
 .env.test.local
 .env.production.local
+123hostedtools_com/123hostedtools.com.key
+123hostedtools_com/123hostedtools.com.pem
 
+#logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
