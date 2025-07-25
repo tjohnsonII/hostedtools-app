@@ -1,4 +1,5 @@
 import React from 'react';
+import '../css/navigationbar.css';
 import '../css/Reference.css';
 
 const Reference: React.FC = () => (

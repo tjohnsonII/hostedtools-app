@@ -1,4 +1,5 @@
 import React from 'react';
+import '../css/navigationbar.css';
 import '../css/ExpansionModuleGenerator.css';
 
 const ExpansionModuleGenerator: React.FC = () => (

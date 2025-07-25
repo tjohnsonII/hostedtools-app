@@ -9,6 +9,7 @@ import FaxCodeGenerator from './pages/FaxCodeGenerator';
 import CallCenter from './pages/CallCenter';
 import Diagnostics from './pages/Diagnostics';
 import Reference from './pages/Reference';
+import './css/navigationbar.css';
 import './css/App.css';
 
 function App() {
