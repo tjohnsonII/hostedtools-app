@@ -32,6 +32,9 @@ const PhoneCodeGenerator: React.FC = () => {
   const [labelName, setLabelName] = useState('');
   const [lineKeyNum, setLineKeyNum] = useState('');
   const [indexNum, setIndexNum] = useState('');
+  const [lineKeys, setLineKeys] = useState([
+    { lineKeyNum: '', labelName: '', extensionNum: '', type: '', value: '' }
+  ]);
 
   const handleCustomChange = (key: string) => {
     setSelectedCustom(prev =>
@@ -51,6 +54,18 @@ const PhoneCodeGenerator: React.FC = () => {
       });
     }
     setConfig(result);
+  };
+
+  const handleLineKeyChange = (idx: number, field: string, value: string) => {
+    setLineKeys(prev => prev.map((lk, i) => i === idx ? { ...lk, [field]: value } : lk));
+  };
+
+  const handleAddLineKey = () => {
+    setLineKeys(prev => [...prev, { lineKeyNum: '', labelName: '', extensionNum: '', type: '', value: '' }]);
+  };
+
+  const handleRemoveLineKey = (idx: number) => {
+    setLineKeys(prev => prev.length > 1 ? prev.filter((_, i) => i !== idx) : prev);
   };
 
   return (
@@ -150,6 +165,34 @@ const PhoneCodeGenerator: React.FC = () => {
               {opt.label}
             </label>
           ))}
+        </div>
+        <div className="pcg-section">
+          <span>Line Keys</span>
+          <table className="pcg-linekey-table">
+            <thead>
+              <tr>
+                <th>Line Key #</th>
+                <th>Label Name</th>
+                <th>Extension #</th>
+                <th>Type</th>
+                <th>Value</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {lineKeys.map((lk, idx) => (
+                <tr key={idx}>
+                  <td><input type="number" value={lk.lineKeyNum} onChange={e => handleLineKeyChange(idx, 'lineKeyNum', e.target.value)} min="1" placeholder="e.g. 1" title="Line Key Number" /></td>
+                  <td><input type="text" value={lk.labelName} onChange={e => handleLineKeyChange(idx, 'labelName', e.target.value)} placeholder="e.g. Main Line" title="Label Name" /></td>
+                  <td><input type="number" value={lk.extensionNum} onChange={e => handleLineKeyChange(idx, 'extensionNum', e.target.value)} min="1" placeholder="e.g. 1001" title="Extension Number" /></td>
+                  <td><input type="text" value={lk.type} onChange={e => handleLineKeyChange(idx, 'type', e.target.value)} placeholder="e.g. 16 (BLF)" title="Type" /></td>
+                  <td><input type="text" value={lk.value} onChange={e => handleLineKeyChange(idx, 'value', e.target.value)} placeholder="e.g. 1001" title="Value" /></td>
+                  <td><button type="button" onClick={() => handleRemoveLineKey(idx)} disabled={lineKeys.length === 1}>Remove</button></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button type="button" className="pcg-add-linekey-btn" onClick={handleAddLineKey}>Add Line Key</button>
         </div>
         <button onClick={handleGenerate} className="pcg-generate-btn">Generate Config</button>
       </div>

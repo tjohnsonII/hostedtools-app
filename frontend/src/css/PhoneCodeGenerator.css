@@ -47,3 +47,19 @@
   display: block;
   margin-bottom: 0.5rem;
 }
+
+.pcg-add-linekey-btn {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.5rem;
+  background: #38a169;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.pcg-add-linekey-btn:hover {
+  background: #276749;
+}
