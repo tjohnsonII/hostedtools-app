@@ -16,18 +16,19 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <nav>
-          <ul>
-            <li><Link to="/">Phone Code Generator</Link></li>
-            <li><Link to="/expansion">Expansion Module Generator</Link></li>
-            <li><Link to="/fullconfig">Full Config</Link></li>
-            <li><Link to="/mikrotik">Mikrotik Code Generator</Link></li>
-            <li><Link to="/switch">Switch Code Generator</Link></li>
-            <li><Link to="/fax">Fax Code Generator</Link></li>
-            <li><Link to="/callcenter">Call Center</Link></li>
-            <li><Link to="/diagnostics">Diagnostics</Link></li>
-            <li><Link to="/reference">Reference</Link></li>
-          </ul>
+        <nav className="navbar">
+          <div className="navbar-logo">Hosted Tools</div>
+          <div className="navbar-links">
+            <Link to="/" className="navbar-link">Phone Code Generator</Link>
+            <Link to="/expansion" className="navbar-link">Expansion Module Generator</Link>
+            <Link to="/fullconfig" className="navbar-link">Full Config</Link>
+            <Link to="/mikrotik" className="navbar-link">Mikrotik Code Generator</Link>
+            <Link to="/switch" className="navbar-link">Switch Code Generator</Link>
+            <Link to="/fax" className="navbar-link">Fax Code Generator</Link>
+            <Link to="/callcenter" className="navbar-link">Call Center</Link>
+            <Link to="/diagnostics" className="navbar-link">Diagnostics</Link>
+            <Link to="/reference" className="navbar-link">Reference</Link>
+          </div>
         </nav>
         <Routes>
           <Route path="/" element={<PhoneCodeGenerator />} />

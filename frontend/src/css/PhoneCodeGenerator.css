@@ -1,0 +1,49 @@
+/* Phone Code Generator Styles */
+.pcg-output {
+  width: 100%;
+  margin-top: 1rem;
+  font-family: monospace;
+  font-size: 1rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  background: #f9f9f9;
+  resize: vertical;
+}
+
+.pcg-section {
+  margin-bottom: 1rem;
+}
+
+.pcg-section span {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.pcg-custom-option {
+  display: inline-block;
+  margin-right: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.pcg-generate-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1.5rem;
+  background: #2b6cb0;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.pcg-generate-btn:hover {
+  background: #1a4369;
+}
+
+.pcg-extra-inputs label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
