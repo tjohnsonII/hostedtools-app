@@ -1,6 +1,10 @@
 #!/bin/bash
 
-npm install
+cd /home/tim2/hostedtools-app/frontend  # Correct frontend directory
+
+npm install --save-dev react-scripts
+npm install xlsx
+npm install papaparse
 npm run build
 
 if [ -f /var/www/html/index.html ]; then
