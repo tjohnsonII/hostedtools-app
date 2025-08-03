@@ -1,38 +1,48 @@
 import React, { useState } from 'react';
 import '../css/navigationbar.css';
-import * as XLSX from 'xlsx';
+
+const BACKEND_URL = 'http://192.168.254.253:5000'; // Change if needed
 
 const StrettoImport: React.FC = () => {
+  const [file, setFile] = useState<File | null>(null);
+  const [rows, setRows] = useState<Array<Record<string, any>>>([]);
   const [columns, setColumns] = useState<string[]>([]);
-  const [rows, setRows] = useState<Array<Record<string, string>>>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFile(e.target.files?.[0] || null);
+    setRows([]);
+    setColumns([]);
+    setError(null);
+  };
+
+  const handleUpload = async () => {
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (evt) => {
-      const data = new Uint8Array(evt.target?.result as ArrayBuffer);
-      const workbook = XLSX.read(data, { type: 'array' });
-      const sheetName = workbook.SheetNames[0];
-      const worksheet = workbook.Sheets[sheetName];
-      const json = XLSX.utils.sheet_to_json<Record<string, string>>(worksheet, { defval: '' });
-      if (json.length > 0) {
-        setColumns(Object.keys(json[0]));
-        setRows(json);
+    setLoading(true);
+    setError(null);
+    const formData = new FormData();
+    formData.append('file', file);
+    try {
+      const res = await fetch(`${BACKEND_URL}/upload/stretto`, {
+        method: 'POST',
+        body: formData,
+      });
+      const json = await res.json();
+      if (json.data && Array.isArray(json.data) && json.data.length > 0) {
+        setRows(json.data);
+        setColumns(Object.keys(json.data[0]));
+      } else {
+        setRows([]);
+        setColumns([]);
+        setError('No data returned from backend.');
       }
-    };
-    reader.readAsArrayBuffer(file);
+    } catch (err: any) {
+      setError('Upload failed.');
+    } finally {
+      setLoading(false);
+    }
   };
-
-  const handleCellChange = (rowIdx: number, col: string, value: string) => {
-    const updatedRows = rows.map((row, idx) =>
-      idx === rowIdx ? { ...row, [col]: value } : row
-    );
-    setRows(updatedRows);
-  };
-
-  const addRow = () => setRows([...rows, Object.fromEntries(columns.map(c => [c, '']))]);
-  const removeRow = (idx: number) => setRows(rows.filter((_, i) => i !== idx));
 
   return (
     <div className="stretto-import">
@@ -42,38 +52,35 @@ const StrettoImport: React.FC = () => {
         id="stretto-file-upload"
         type="file"
         accept=".xls,.xlsx,.xlsm"
-        onChange={handleFileUpload}
+        onChange={handleFileChange}
         title="Upload Stretto import spreadsheet"
       />
-      <table className="stretto-table">
-        <thead>
-          <tr>
-            {columns.map(col => <th key={col}>{col}</th>)}
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, rowIdx) => (
-            <tr key={rowIdx}>
-              {columns.map(col => (
-                <td key={col}>
-                  <input
-                    type="text"
-                    value={row[col] || ''}
-                    onChange={e => handleCellChange(rowIdx, col, e.target.value)}
-                    placeholder={col}
-                    title={col}
-                  />
-                </td>
-              ))}
-              <td>
-                <button onClick={() => removeRow(rowIdx)} disabled={rows.length === 1}>-</button>
-              </td>
+      <button
+        onClick={handleUpload}
+        disabled={!file || loading}
+        className="stretto-upload-btn"
+      >
+        {loading ? 'Uploading...' : 'Upload'}
+      </button>
+      {error && <div className="stretto-error">{error}</div>}
+      {rows.length > 0 && (
+        <table className="stretto-table stretto-table-margin">
+          <thead>
+            <tr>
+              {columns.map(col => <th key={col}>{col}</th>)}
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <button onClick={addRow}>Add Row</button>
+          </thead>
+          <tbody>
+            {rows.map((row, rowIdx) => (
+              <tr key={rowIdx}>
+                {columns.map(col => (
+                  <td key={col}>{row[col]}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };

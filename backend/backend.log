@@ -1,0 +1,7 @@
+
+> backend@1.0.0 start
+> node server.js
+
+[dotenv@17.2.1] injecting env (5) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+[dotenv@17.2.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+Server running on 0.0.0.0:5000

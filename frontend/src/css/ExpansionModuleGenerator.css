@@ -34,4 +34,15 @@
     gap: 2rem;
   }
 }
-/* ...existing code... */
+
+/* Stretto Import custom styles */
+.stretto-upload-btn {
+  margin-left: 8px;
+}
+.stretto-error {
+  color: red;
+  margin-top: 10px;
+}
+.stretto-table-margin {
+  margin-top: 20px;
+}
